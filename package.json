@@ -1,7 +1,7 @@
 {
   "packageManager": "pnpm@9.15.0",
   "name": "smartcommit",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Commit message auto-generation CLI",
   "type": "module",
   "main": "dist/cli/index.js",
