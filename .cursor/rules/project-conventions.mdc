@@ -40,3 +40,8 @@ src/
 ## 质量门禁
 
 提交前执行：`pnpm build && pnpm lint && pnpm test`
+
+## CI / 发布
+
+- **CI**：Actions → CI → Run workflow，输入 `ci`
+- **Release**：Actions → Release → Run workflow，输入 `release` 及版本号；需配置 `NPM_TOKEN`
