@@ -50,3 +50,10 @@ src/
 - 构建：`pnpm build`
 - 测试：`pnpm test`
 - 每次提交前确保 `pnpm build && pnpm lint && pnpm test` 通过
+
+## 发布流程
+
+1. 更新 `package.json` 的 `version`（遵循 semver）
+2. 提交并推送后执行：`git tag vx.y.z && git push origin vx.y.z`
+3. CI 自动触发 release workflow，发布到 npm
+4. 前置条件：在 GitHub 仓库 Settings → Secrets 配置 `NPM_TOKEN`
