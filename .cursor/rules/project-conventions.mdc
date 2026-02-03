@@ -1,0 +1,47 @@
+---
+description: 项目编码规范与约定
+alwaysApply: true
+---
+
+# 项目规范
+
+## Import 路径
+
+- 使用项目路径别名 `@/`，禁止使用相对路径 `../`、`../../`
+- 示例：`import { loadConfig } from '@/core/config/loader.js'`
+- tsconfig 已配置 `"@/*": ["./src/*"]`
+
+## TypeScript 与 Lint
+
+- 启用 `strict` 模式，禁止 `any`
+- 每次修改后运行 `npm run lint` 解决 ESLint 报错
+- 运行 `npm run build` 确保类型检查通过
+
+## 核心目录结构
+
+```
+src/
+  cli/            # 命令行入口，commander 配置
+    commands/     # 子命令实现
+  core/           # 核心业务逻辑
+    config/       # 配置加载
+    formatter/    # commit 格式化
+    generator/    # 消息生成（local/remote adapter）
+    git/          # Git 上下文提取
+    output/       # 输出处理（stdout/clipboard）
+  utils/          # 工具函数
+```
+
+新建或移动文件时按上述结构归档。
+
+## 提交规范
+
+- 遵循 Conventional Commit（feat/fix/docs/refactor 等）
+- 全英文，简洁，不超过 25 词
+- 触发时机：改动为 feature 或 bug 时
+
+## 构建与测试
+
+- 构建：`npm run build`
+- 测试：`npm test`
+- 每次提交前确保 `npm run build && npm run lint && npm test` 通过

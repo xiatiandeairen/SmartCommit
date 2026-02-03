@@ -1,0 +1,40 @@
+{
+  "name": "commitgen",
+  "version": "0.1.0",
+  "description": "Commit message auto-generation CLI",
+  "type": "module",
+  "main": "dist/cli/index.js",
+  "bin": {
+    "commitgen": "dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc && tsc-alias -p tsconfig.json --resolve-full-paths && node build.mjs",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src/"
+  },
+  "keywords": [
+    "commit",
+    "cli",
+    "conventional-commit"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "clipboardy": "^4.0.0",
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@typescript-eslint/eslint-plugin": "^8.54.0",
+    "@typescript-eslint/parser": "^8.54.0",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.39.2",
+    "tsc-alias": "^1.8.16",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  }
+}
