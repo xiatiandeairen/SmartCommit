@@ -1,12 +1,12 @@
 {
   "packageManager": "pnpm@9.15.0",
-  "name": "commitgen",
+  "name": "smartcommit",
   "version": "0.1.2",
   "description": "Commit message auto-generation CLI",
   "type": "module",
   "main": "dist/cli/index.js",
   "bin": {
-    "commitgen": "dist/cli/index.js"
+    "smartcommit": "dist/cli/index.js"
   },
   "scripts": {
     "build": "tsc && tsc-alias -p tsconfig.json --resolve-full-paths && node build.mjs",
