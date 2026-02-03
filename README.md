@@ -47,7 +47,7 @@ Or add `commitgen` field to `package.json`.
 ## Development
 
 ```bash
-npm install
-npm run build
-npm test
+pnpm install
+pnpm build
+pnpm test
 ```

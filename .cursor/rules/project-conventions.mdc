@@ -11,11 +11,15 @@ alwaysApply: true
 - 示例：`import { loadConfig } from '@/core/config/loader.js'`
 - tsconfig 已配置 `"@/*": ["./src/*"]`
 
+## 包管理器
+
+- 使用 pnpm，禁止使用 npm/yarn
+
 ## TypeScript 与 Lint
 
 - 启用 `strict` 模式，禁止 `any`
-- 每次修改后运行 `npm run lint` 解决 ESLint 报错
-- 运行 `npm run build` 确保类型检查通过
+- 每次修改后运行 `pnpm lint` 解决 ESLint 报错
+- 运行 `pnpm build` 确保类型检查通过
 
 ## 核心目录结构
 
@@ -42,6 +46,7 @@ src/
 
 ## 构建与测试
 
-- 构建：`npm run build`
-- 测试：`npm test`
-- 每次提交前确保 `npm run build && npm run lint && npm test` 通过
+- 安装依赖：`pnpm install`
+- 构建：`pnpm build`
+- 测试：`pnpm test`
+- 每次提交前确保 `pnpm build && pnpm lint && pnpm test` 通过
