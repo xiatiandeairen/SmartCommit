@@ -3,35 +3,49 @@ name: Release
 on:
   workflow_dispatch:
     inputs:
-      trigger:
-        description: 'Enter "release" to publish'
-        required: true
-        default: 'release'
       version:
-        description: 'Version tag (e.g. v0.1.0)'
+        description: 'Release version (e.g. 0.1.0)'
         required: true
 
 jobs:
   release:
     runs-on: ubuntu-latest
-    if: github.event.inputs.trigger == 'release'
+    environment: npm-release   # 启用环境保护
+
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          node-version: '20'
-          cache: 'pnpm'
-          registry-url: 'https://registry.npmjs.org'
+          fetch-depth: 0
 
-      - run: pnpm install --frozen-lockfile
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
 
-      - run: pnpm build
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
 
-      - run: pnpm test
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
 
-      - run: pnpm publish --no-git-checks --access public
+      - name: Build
+        run: pnpm build
+
+      - name: Set version
+        run: pnpm version ${{ inputs.version }} --no-git-tag-version
+
+      - name: Create git tag
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git commit -am "release: v${{ inputs.version }}"
+          git tag v${{ inputs.version }}
+          git push origin HEAD --tags
+
+      - name: Publish to npm
+        run: pnpm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
