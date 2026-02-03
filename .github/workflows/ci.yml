@@ -1,31 +1,39 @@
 name: CI
 
 on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
-    inputs:
-      trigger:
-        description: 'Enter "ci" to run'
-        required: true
-        default: 'ci'
 
 jobs:
-  build:
+  ci:
     runs-on: ubuntu-latest
-    if: github.event.inputs.trigger == 'ci'
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: '20'
-          cache: 'pnpm'
+          version: 9
 
-      - run: pnpm install --frozen-lockfile
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
 
-      - run: pnpm build
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      - run: pnpm lint
+      - name: Lint
+        run: pnpm lint
 
-      - run: pnpm test
+      - name: Build
+        run: pnpm build
+
+      - name: Test
+        run: pnpm test
