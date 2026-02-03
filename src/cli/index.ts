@@ -5,17 +5,34 @@ const program = new Command();
 
 program
   .name('commitgen')
-  .description('Auto-generate commit messages from staged changes')
-  .version('0.1.0');
+  .description('Auto-generate Conventional Commit messages from staged Git changes')
+  .version('0.1.0')
+  .addHelpText(
+    'after',
+    `
+Generate options:
+  -m, --model <type>   local (template) or remote (API) (default: local)
+  -s, --style <type>   conventional or custom (default: conventional)
+  -c, --copy           copy to clipboard
+  -v, --verbose        verbose logging
+  -d, --debug          trace key path for debugging
+
+Examples:
+  commitgen generate              Generate message and print to stdout
+  commitgen generate --copy       Generate and copy to clipboard
+  commitgen generate --model remote  Use remote API
+  commitgen generate --debug     Enable trace logging
+`
+  );
 
 program
   .command('generate')
   .description('Generate a commit message from staged changes')
-  .option('-m, --model <type>', 'Model type: local or remote', 'local')
-  .option('-s, --style <type>', 'Commit style: conventional or custom', 'conventional')
-  .option('-c, --copy', 'Copy generated message to clipboard')
-  .option('-v, --verbose', 'Enable verbose logging')
-  .option('-d, --debug', 'Enable debug mode with key path tracing')
+  .option('-m, --model <type>', 'local (template) or remote (API)', 'local')
+  .option('-s, --style <type>', 'conventional or custom', 'conventional')
+  .option('-c, --copy', 'copy to clipboard')
+  .option('-v, --verbose', 'verbose logging')
+  .option('-d, --debug', 'trace key path for debugging')
   .action(async (opts) => {
     await runGenerate({
       model: opts.model as 'local' | 'remote',
