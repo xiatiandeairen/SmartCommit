@@ -5,55 +5,38 @@ alwaysApply: true
 
 # 项目规范
 
-## Import 路径
+## 开发规范
 
-- 使用项目路径别名 `@/`，禁止使用相对路径 `../`、`../../`
-- 示例：`import { loadConfig } from '@/core/config/loader.js'`
-- tsconfig 已配置 `"@/*": ["./src/*"]`
+| 维度 | 约定 |
+|------|------|
+| 包管理器 | pnpm，禁止 npm/yarn |
+| Import | 使用 `@/` 别名，禁止 `../`、`../../` |
+| TypeScript | `strict` 模式，禁止 `any` |
+| Lint | 修改后运行 `pnpm lint` |
 
-## 包管理器
-
-- 使用 pnpm，禁止使用 npm/yarn
-
-## TypeScript 与 Lint
-
-- 启用 `strict` 模式，禁止 `any`
-- 每次修改后运行 `pnpm lint` 解决 ESLint 报错
-- 运行 `pnpm build` 确保类型检查通过
-
-## 核心目录结构
+## 目录结构
 
 ```
 src/
-  cli/            # 命令行入口，commander 配置
-    commands/     # 子命令实现
-  core/           # 核心业务逻辑
-    config/       # 配置加载
+  cli/            # 命令行入口
+    commands/     # 子命令
+  core/           # 核心逻辑
+    config/       # 配置
     formatter/    # commit 格式化
-    generator/    # 消息生成（local/remote adapter）
-    git/          # Git 上下文提取
-    output/       # 输出处理（stdout/clipboard）
-  utils/          # 工具函数
+    generator/    # 消息生成
+    git/          # Git 上下文
+    output/       # 输出处理
+  utils/          # 工具
 ```
 
-新建或移动文件时按上述结构归档。
+新建/移动文件按上述结构归档。
 
 ## 提交规范
 
-- 遵循 Conventional Commit（feat/fix/docs/refactor 等）
-- 全英文，简洁，不超过 25 词
-- 触发时机：改动为 feature 或 bug 时
+- Conventional Commit（feat/fix/docs/refactor）
+- 全英文，≤25 词
+- 触发：feature 或 bug 改动
 
-## 构建与测试
+## 质量门禁
 
-- 安装依赖：`pnpm install`
-- 构建：`pnpm build`
-- 测试：`pnpm test`
-- 每次提交前确保 `pnpm build && pnpm lint && pnpm test` 通过
-
-## 发布流程
-
-1. 更新 `package.json` 的 `version`（遵循 semver）
-2. 提交并推送后执行：`git tag vx.y.z && git push origin vx.y.z`
-3. CI 自动触发 release workflow，发布到 npm
-4. 前置条件：在 GitHub 仓库 Settings → Secrets 配置 `NPM_TOKEN`
+提交前执行：`pnpm build && pnpm lint && pnpm test`
